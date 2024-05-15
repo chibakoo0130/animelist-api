@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="animelistapi.repository.AnimelistRepository">
+	<select id="selectAnimeBroadcastInfoList" resultType="animelistapi.domain.AnimeBroadcastInfo">
+		select 
+			t1.id,
+			t2.broadcast_detail_id,
+			title, 
+			tv_station, 
+			broadcast_date 
+		from t_anime t1 
+		right outer join t_broadcast_detail t2 
+		on t1.id = t2.anime_id 
+		order by t1.id asc, broadcast_detail_id asc
+	</select>
+</mapper>

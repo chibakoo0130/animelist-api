@@ -1,0 +1,22 @@
+components:
+  schemas:
+    animeBroadcastInfo:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: タイトル
+        broadcastInfoList:
+          type: array
+          description: 放送情報
+          items:
+            type: object
+            properties:
+              tVStation:
+                type: string
+                description: 放送局
+              broadcastDate:
+                type: string
+                description: 放送日

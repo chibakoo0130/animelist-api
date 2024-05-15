@@ -1,0 +1,29 @@
+openapi: "3.0.2"
+
+info:
+  title: アニメ放送情報 API
+  version: 1.0.0
+
+paths:
+  /v1/animes/broadcastinfos:
+    get:
+      summary: アニメ放送情報一覧取得
+      description: アニメ放送情報の一覧を取得します
+      responses:
+        "200":
+          description: アニメ放送情報の一覧を返却する
+          content:
+            application/json; charset=utf-8:
+              schema:
+                  description: アニメ放送情報の一覧（0件あり）
+                  type: array
+                  items:
+                    $ref: "./components/schemas.yaml#/components/schemas/animeBroadcastInfo"
+        "400":
+          description: bad request
+        "404":
+          description: not found
+        "405":
+          description: method not allowed
+        "503":
+          description: internal server error
