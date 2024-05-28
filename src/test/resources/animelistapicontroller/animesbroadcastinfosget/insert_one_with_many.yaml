@@ -1,0 +1,35 @@
+t_anime:
+  - id: 1
+    title: ""
+    update_date: "2023-01-01 10:00:00"
+  - id: 2
+    title: " "
+    update_date: "2023-01-02 10:00:00"
+  - id: 3
+    title: "　!\"#$%&¥'()=~|！”＃＄％＆’（）＝〜｜"
+    update_date: "2023-01-02 10:00:00"
+  - id: 4
+    title: "1234567890223456789032345678904234567890523456789062345678907234567890823456789092345678900234567890"
+    update_date: "2023-01-03 10:00:00"
+
+t_broadcast_detail:
+  - broadcast_detail_id: 1
+    anime_id: 1
+    tv_station: ""
+    broadcast_date: ""
+    update_date: "2023-01-05 10:00:00"
+  - broadcast_detail_id: 2
+    anime_id: 2
+    tv_station: " "
+    broadcast_date: " "
+    update_date: "2023-01-06 10:00:00"
+  - broadcast_detail_id: 3
+    anime_id: 3
+    tv_station: "　!\"#$%&¥'()=~|！”＃＄％"
+    broadcast_date: "　!\"#$%&¥'()=~|！”＃＄％＆’（）＝〜｜"
+    update_date: "2023-01-07 10:00:00"
+  - broadcast_detail_id: 4
+    anime_id: 4
+    tv_station: "1234567890234567890"
+    broadcast_date: "12345678902234567890323456789042345678905234567890"
+    update_date: "2023-01-08 10:00:00"
