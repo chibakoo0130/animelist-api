@@ -40,7 +40,9 @@ class AnimelistApiControllerTest {
 	@DataSet(cleanBefore = true)
 	void アニメ放送情報が0件() throws Exception {
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
         List<AnimeBroadcastInfo> animeBroadcastInfoList = objectMapper.readValue(resStr, objectMapper.getTypeFactory().constructCollectionType(List.class, AnimeBroadcastInfo.class));
 		assertEquals(0, animeBroadcastInfoList.size());
@@ -51,7 +53,9 @@ class AnimelistApiControllerTest {
 	@DataSet("/animelistapicontroller/animesbroadcastinfosget/insert_one.yaml")
 	void アニメ放送情報が1件() throws Exception {
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
 		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
 		
@@ -71,7 +75,9 @@ class AnimelistApiControllerTest {
 	void アニメ放送情報が3件() throws Exception {
 		
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
 		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
 		
@@ -108,7 +114,9 @@ class AnimelistApiControllerTest {
 	void アニメに対して放送情報0件() throws Exception {
 		
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
 		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
 		
@@ -122,7 +130,9 @@ class AnimelistApiControllerTest {
 	void アニメに対して放送情報2件() throws Exception {
 		
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
 		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
 		
@@ -146,7 +156,9 @@ class AnimelistApiControllerTest {
 	void 放送情報各項目のテスト() throws Exception {
 		
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
 		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
 		
