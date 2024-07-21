@@ -141,6 +141,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+							<skipValidateSpec>true</skipValidateSpec>
                             <inputSpec>${project.basedir}/open-api/animelist-api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                         </configuration>
