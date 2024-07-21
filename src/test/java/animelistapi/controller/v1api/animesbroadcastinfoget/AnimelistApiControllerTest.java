@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import animelistapi.exception.Error;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openapitools.model.AnimeBroadcastInfo;
@@ -33,19 +34,21 @@ class AnimelistApiControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	private static String API_URL = "/v1/animes/broadcastinfos";
+	private static final String API_URL = "/v1/animes/broadcastinfos";
 	
 	@Test
 	@DisplayName("正常系_1_アニメ放送情報が0件")
 	@DataSet(cleanBefore = true)
 	void アニメ放送情報が0件() throws Exception {
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
 				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
 				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		
-        List<AnimeBroadcastInfo> animeBroadcastInfoList = objectMapper.readValue(resStr, objectMapper.getTypeFactory().constructCollectionType(List.class, AnimeBroadcastInfo.class));
-		assertEquals(0, animeBroadcastInfoList.size());
+        Error res = objectMapper.readValue(resStr, Error.class);
+		assertEquals(404, res.getStatusCode());
+		assertEquals("検索結果が0件です。", res.getErrorMessage());
+		assertNull(res.getErrorDetail());
 	}
 	
 	@Test
@@ -114,14 +117,15 @@ class AnimelistApiControllerTest {
 	void アニメに対して放送情報0件() throws Exception {
 		
 		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
-				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
 				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
 				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-		
-		List<AnimeBroadcastInfo> res = objectMapper.readValue(resStr, new TypeReference<List<AnimeBroadcastInfo>>() {});
-		
-		// このケースはjoinでデータが取れない
-		assertEquals(0, res.size());
+
+		// このケースではjoinでデータが取れず0件
+		Error res = objectMapper.readValue(resStr, Error.class);
+		assertEquals(404, res.getStatusCode());
+		assertEquals("検索結果が0件です。", res.getErrorMessage());
+		assertNull(res.getErrorDetail());
 	}
 	
 	@Test

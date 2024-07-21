@@ -3,6 +3,7 @@ package animelistapi.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import animelistapi.exception.Response404Exception;
 import org.openapitools.api.V1Api;
 import org.openapitools.model.AnimeBroadcastInfo;
 import org.openapitools.model.AnimeBroadcastInfoBroadcastInfoListInner;
@@ -26,6 +27,10 @@ public class AnimelistApiController implements V1Api {
 		
 		List<animelistapi.domain.AnimeBroadcastInfo> animeList = service.selectAnimeBroadcastInfoList();
 
+		if (animeList.isEmpty()) {
+			throw new Response404Exception("検索結果が0件です。");
+		}
+		
 		List<AnimeBroadcastInfo> resAnimelist = new ArrayList<AnimeBroadcastInfo>();
 		AnimeBroadcastInfo resAnime = null;
 		for (int i = 0; i < animeList.size(); i++) {
