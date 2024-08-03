@@ -6,13 +6,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import animelistapi.exception.Error;
+import animelistapi.service.AnimelistService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.openapitools.model.AnimeBroadcastInfo;
 import org.openapitools.model.AnimeBroadcastInfoBroadcastInfoListInner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -33,6 +36,10 @@ class AnimelistApiControllerTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	// モックにせず実メソッドを呼ぶケースもあるためSpy
+    @SpyBean
+    private AnimelistService mockService;
 	
 	private static final String API_URL = "/v1/animes/broadcastinfos";
 	
@@ -201,4 +208,25 @@ class AnimelistApiControllerTest {
 		assertEquals("1234567890234567890", broadcastInfo_4.gettVStation());
 		assertEquals("12345678902234567890323456789042345678905234567890", broadcastInfo_4.getBroadcastDate());
 	}
+
+	@Test
+	@DisplayName("異常系_7_DB処理でエラー")
+	void DB処理エラーの場合のテスト() throws Exception {
+
+		// PSQLExceptionなどは定義外でモックのエラーになるためnullpoで例外発生させる
+		Mockito.when(mockService.selectAnimeBroadcastInfoList()).thenThrow(NullPointerException.class);
+
+		String resStr = mockMvc.perform(MockMvcRequestBuilders.get(API_URL))
+				.andExpect(MockMvcResultMatchers.status().isInternalServerError())
+				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=utf-8"))
+				.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+		Error res = objectMapper.readValue(resStr, Error.class);
+		assertEquals(500, res.getStatusCode());
+		assertEquals("DB処理に失敗しました。", res.getErrorMessage());
+		assertNull(res.getErrorDetail());
+
+	}
+
+
 }

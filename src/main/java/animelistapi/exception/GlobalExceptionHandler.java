@@ -19,4 +19,15 @@ public class GlobalExceptionHandler {
         error.setErrorMessage(ex.getMessage());
         return new ResponseEntity<>(error, headers, HttpStatusCode.valueOf(404));
     }
+
+    @ExceptionHandler(Response500Exception.class)
+    public ResponseEntity<Error> handle500(Response500Exception ex) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8");
+
+        Error error = new Error();
+        error.setStatusCode(500);
+        error.setErrorMessage(ex.getMessage());
+        return new ResponseEntity<>(error, headers, HttpStatusCode.valueOf(500));
+    }
 }

@@ -1,9 +1,8 @@
 package animelistapi.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import animelistapi.exception.Response404Exception;
+import animelistapi.exception.Response500Exception;
+import animelistapi.service.AnimelistService;
 import org.openapitools.api.V1Api;
 import org.openapitools.model.AnimeBroadcastInfo;
 import org.openapitools.model.AnimeBroadcastInfoBroadcastInfoListInner;
@@ -13,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import animelistapi.service.AnimelistService;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -24,8 +24,13 @@ public class AnimelistApiController implements V1Api {
 	
 	@Override
 	public ResponseEntity<List<AnimeBroadcastInfo>> v1AnimesBroadcastinfosGet() {
-		
-		List<animelistapi.domain.AnimeBroadcastInfo> animeList = service.selectAnimeBroadcastInfoList();
+
+		List<animelistapi.domain.AnimeBroadcastInfo> animeList = null;
+		try {
+			animeList = service.selectAnimeBroadcastInfoList();
+		} catch (Exception e) {
+			throw new Response500Exception("DB処理に失敗しました。", e.getMessage());
+		}
 
 		if (animeList.isEmpty()) {
 			throw new Response404Exception("検索結果が0件です。");
