@@ -151,6 +151,9 @@
 							<skipValidateSpec>true</skipValidateSpec>
                             <inputSpec>${project.basedir}/open-api/animelist-api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+							</configOptions>
                         </configuration>
                     </execution>
                 </executions>
